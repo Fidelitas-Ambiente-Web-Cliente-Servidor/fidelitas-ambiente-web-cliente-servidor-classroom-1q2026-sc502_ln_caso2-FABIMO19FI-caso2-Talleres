@@ -10,25 +10,22 @@ require_once './app/models/User.php';
 
 $page = $_GET['page'] ?? 'login';
 
-// ========== RUTAS GET OBTENER DATOS ==========
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    // Obtener listado de talleres
-    if ($_GET['option'] ?? "" == "talleres_json") {
+    // Obtener listado de talleres disponibles
+    if (($_GET['option'] ?? "") == "talleres_json") {
         $taller = new TallerController();
         $taller->getTalleresJson();
         exit;
     }
 
-    // Obtener solicitudes pendientes
-    if ($_GET['option'] ?? "" == "solicitudes_json") {
+    if (($_GET['option'] ?? "") == "solicitudes_json") {
         $admin = new AdminController();
-        //$admin->getSolicitudesJson();
+        $admin->getSolicitudesJson();
         exit;
     }
 }
 
-// ========== RUTAS FORMULARIO POST ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($_POST['option'] == "login") {
@@ -68,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// ========== RUTAS DE VISTAS ==========
 switch ($page) {
 
     case "talleres":
@@ -85,10 +81,12 @@ switch ($page) {
         $auth = new UserController();
         $auth->logout();
         break;
+
     case "registro":
         $auth = new UserController();
         $auth->showRegistro();
         break;
+
     case "login":
     default:
         $auth = new UserController();
